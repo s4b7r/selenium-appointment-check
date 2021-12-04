@@ -1,5 +1,14 @@
 # To add a new cell, type '# %%'
 # To add a new markdown cell, type '# %% [markdown]'
+
+# %%
+import json
+with open('config.json', 'r') as conffile:
+    config = json.load(conffile)
+TOKEN = config['bot-token']
+USER_ID = config['user-id']
+
+
 # %%
 import time
 from selenium import webdriver
@@ -93,7 +102,13 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 # %%
+time.sleep(5) # Sometimes it takes some time to appear
 termin_label = driver.find_element_by_xpath('//label[contains(text(), "Termin")]')
+
+
+# %%
+from telegram.ext import Updater
+updater = Updater(token=TOKEN, use_context=True)
 
 
 # %%
@@ -102,12 +117,14 @@ try:
     termin_label.find_element_by_xpath('../following-sibling::div/div[contains(text(), "keine freien Termine")]')
 except NoSuchElementException:
     print('probably there is an appointment open')
+    updater.bot.send_message(chat_id=USER_ID, text=f'probably there is an appointment open')
     pass
 try:
     termin_label.find_element_by_xpath('../following-sibling::div//label[contains(text(), "Datum")]')
     termin_label.find_element_by_xpath('../following-sibling::div//select[@name="form_data.appointment.date"]')
 except NoSuchElementException:
     print('probably no appointment open')
+    updater.bot.send_message(chat_id=USER_ID, text=f'probably no appointment open')
     pass
 
 
