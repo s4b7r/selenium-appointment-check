@@ -1,0 +1,11 @@
+.ipynb_checkpoints/
+
+.vscode/*
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+chromedriver.exe
+
+botdata/
