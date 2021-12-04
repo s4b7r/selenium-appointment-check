@@ -1,8 +1,24 @@
 # README
 
+Current test run with `docker-compose up`
+
 ## Prerequesites
 
 Install [chromedriver](https://sites.google.com/chromium.org/driver/) into this directory or somewhere else in `PATH`.
+
+## Remote WebDriver
+
+```bash
+docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome
+```
+
+```python
+driver = webdriver.Remote(
+    command_executor='http://localhost:4444',
+)
+```
+
+Look at it with browser on `http://localhost:7900/`, password `secret`.
 
 ## Ipython Notebooks in Git
 

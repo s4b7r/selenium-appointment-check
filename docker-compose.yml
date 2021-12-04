@@ -1,0 +1,25 @@
+version: '3'
+services:
+  webdriver:
+    image: selenium/standalone-chrome:4.1.0-20211123
+    container_name: selenium-appointment-chrome-webdriver
+    ports:
+      - "127.0.0.1:4444:4444"
+      - "127.0.0.1:7900:7900"
+    networks:
+      - remotedriver
+  bot:
+    image: python:3.8-slim-buster
+    container_name: selenium-appointment-botpython
+    environment:
+      - APPDATA=/appdata
+    ports:
+      - "127.0.0.1:8000:8000"
+    entrypoint: "/app/container-run.sh"
+    volumes:
+      - .:/app:ro
+      - ./botdata:/appdata:rw
+    networks:
+      - remotedriver
+networks:
+  remotedriver:
