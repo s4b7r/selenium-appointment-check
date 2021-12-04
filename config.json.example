@@ -1,4 +1,7 @@
 {
     "bot-token": "TELEGRAM-BOT-TOKEN",
-    "user-id": TELEGRAM-USER-ID
+    "user-ids": [
+        TELEGRAM-USER-ID,
+        TELEGRAM-USER-ID
+    ]
 }

@@ -6,7 +6,7 @@ import json
 with open('config.json', 'r') as conffile:
     config = json.load(conffile)
 TOKEN = config['bot-token']
-USER_ID = config['user-id']
+USER_IDS = config['user-ids']
 
 
 # %%
@@ -117,14 +117,16 @@ try:
     termin_label.find_element_by_xpath('../following-sibling::div/div[contains(text(), "keine freien Termine")]')
 except NoSuchElementException:
     print('probably there is an appointment open')
-    updater.bot.send_message(chat_id=USER_ID, text=f'probably there is an appointment open')
+    for user_id in USER_IDS:
+        updater.bot.send_message(chat_id=user_id, text=f'probably there is an appointment open')
     pass
 try:
     termin_label.find_element_by_xpath('../following-sibling::div//label[contains(text(), "Datum")]')
     termin_label.find_element_by_xpath('../following-sibling::div//select[@name="form_data.appointment.date"]')
 except NoSuchElementException:
     print('probably no appointment open')
-    updater.bot.send_message(chat_id=USER_ID, text=f'probably no appointment open')
+    for user_id in USER_IDS:
+        updater.bot.send_message(chat_id=user_id, text=f'probably no appointment open')
     pass
 
 
